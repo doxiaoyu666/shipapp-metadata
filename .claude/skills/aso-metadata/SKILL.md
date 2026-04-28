@@ -10,7 +10,7 @@ Generate multilingual App Store metadata and upload to App Store Connect in one 
 
 ## Prerequisites
 
-- `shipapp-metadata` CLI installed (`npm install -g @shipapp/metadata`)
+- `shipapp-metadata` CLI installed (clone repo, `npm install && npm run build`)
 - App Store Connect API credentials configured (`shipapp-metadata init`)
 
 ## Arguments

@@ -40,6 +40,7 @@ If you use [Claude Code](https://claude.ai/code), just clone this repo and use t
 ```bash
 git clone https://github.com/doxiaoyu666/shipapp-metadata.git
 cd shipapp-metadata
+npm install && npm run build
 
 # One-time setup
 shipapp-metadata init
@@ -53,7 +54,9 @@ The skill will generate optimized metadata in 8 languages, let you review, then 
 ### Option B: CLI
 
 ```bash
-npm install -g @shipapp/metadata
+git clone https://github.com/doxiaoyu666/shipapp-metadata.git
+cd shipapp-metadata
+npm install && npm run build
 
 # Configure your API credentials (one-time setup)
 shipapp-metadata init
@@ -342,6 +345,7 @@ MIT
 ```bash
 git clone https://github.com/doxiaoyu666/shipapp-metadata.git
 cd shipapp-metadata
+npm install && npm run build
 
 # 首次配置
 shipapp-metadata init
@@ -355,7 +359,9 @@ Skill 会自动生成 8 种语言的优化文案，确认后一键上传到 App 
 ### 方式二：CLI
 
 ```bash
-npm install -g @shipapp/metadata
+git clone https://github.com/doxiaoyu666/shipapp-metadata.git
+cd shipapp-metadata
+npm install && npm run build
 
 # 配置 API 凭证（只需一次）
 shipapp-metadata init
