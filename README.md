@@ -106,15 +106,15 @@ shipapp-metadata pull --app "MyApp" --output ./metadata
 
 This creates one JSON file per language (e.g., `en-US.json`, `zh-Hans.json`) with your current descriptions, keywords, etc. Now you have a local copy to work with.
 
-### Every release: Update What's New
+### Every release: Update What's New only
 
-The most common use case — update the "What's New" text for a new version:
+The most common use case — you're releasing a new version and only need to update the "What's New" text, without touching descriptions or keywords:
 
 **With Claude Code (recommended):**
 ```
-/aso-metadata MyApp
+/aso-metadata MyApp --only whats_new
 ```
-Tell it what changed → AI generates What's New in all languages → review → auto-upload.
+Tell it what changed → AI generates What's New in all languages → review → auto-upload. Other fields (description, keywords, etc.) are left unchanged.
 
 **With CLI:**
 1. Edit the `whats_new` field in each JSON file
@@ -122,13 +122,13 @@ Tell it what changed → AI generates What's New in all languages → review →
 
 ### Full metadata refresh
 
-When you want to rewrite descriptions, keywords, or promotional text:
+When you want to rewrite everything — descriptions, keywords, promotional text, and What's New:
 
 **With Claude Code:**
 ```
 /aso-metadata MyApp
 ```
-Describe your app or point to a changelog → AI generates optimized metadata for all languages → review → upload.
+Describe your app or point to a changelog → AI generates all fields for all languages → review → upload.
 
 **With CLI:**
 1. Edit the JSON files (or use any AI tool to generate them)
@@ -408,15 +408,15 @@ shipapp-metadata pull --app "我的App" --output ./metadata
 
 每种语言生成一个 JSON 文件（`en-US.json`、`zh-Hans.json` 等），包含当前的描述、关键词等。
 
-### 每次发版：更新「新功能」
+### 每次发版：只更新「新功能」
 
-最常见的场景——发新版本时更新 What's New：
+最常见的场景——发新版本时，只需要更新 What's New，不动描述和关键词：
 
 **用 Claude Code（推荐）：**
 ```
-/aso-metadata 我的App
+/aso-metadata 我的App --only whats_new
 ```
-告诉它改了什么 → AI 生成所有语言的更新日志 → 确认 → 自动上传。
+告诉它改了什么 → AI 生成所有语言的更新日志 → 确认 → 自动上传。其他字段（描述、关键词等）不会被修改。
 
 **用 CLI：**
 1. 编辑每个 JSON 文件的 `whats_new` 字段
@@ -424,7 +424,7 @@ shipapp-metadata pull --app "我的App" --output ./metadata
 
 ### 全量更新文案
 
-当你想重写描述、关键词或推广文本：
+当你想重写所有内容——描述、关键词、推广文本、更新日志：
 
 **用 Claude Code：**
 ```
