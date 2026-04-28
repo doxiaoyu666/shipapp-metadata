@@ -38,8 +38,8 @@ Updating App Store metadata through the web UI is painful — especially when yo
 If you use [Claude Code](https://claude.ai/code), just clone this repo and use the built-in skill:
 
 ```bash
-git clone https://github.com/shipapp/metadata.git
-cd metadata
+git clone https://github.com/doxiaoyu666/shipapp-metadata.git
+cd shipapp-metadata
 
 # One-time setup
 shipapp-metadata init
@@ -340,8 +340,8 @@ MIT
 如果你使用 [Claude Code](https://claude.ai/code)，clone 本仓库后直接用内置 Skill：
 
 ```bash
-git clone https://github.com/shipapp/metadata.git
-cd metadata
+git clone https://github.com/doxiaoyu666/shipapp-metadata.git
+cd shipapp-metadata
 
 # 首次配置
 shipapp-metadata init

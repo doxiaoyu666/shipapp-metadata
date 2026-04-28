@@ -1,3 +1,10 @@
 node_modules/
 dist/
 .DS_Store
+
+# Credentials — never commit these
+credentials.json
+*.p8
+.shipapp/
+.env
+.env.*

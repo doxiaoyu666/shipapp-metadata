@@ -10,7 +10,8 @@
   "scripts": {
     "build": "esbuild src/cli.ts --bundle --platform=node --target=node18 --outfile=dist/cli.js --format=cjs --banner:js='#!/usr/bin/env node' && esbuild src/mcp/server.ts --bundle --platform=node --target=node18 --outfile=dist/mcp.js --format=cjs --banner:js='#!/usr/bin/env node'",
     "dev": "tsx src/cli.ts",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "vitest run"
   },
   "keywords": [
     "app-store-connect",
@@ -41,6 +42,7 @@
     "@types/yargs": "^17.0.0",
     "esbuild": "^0.20.0",
     "tsx": "^4.0.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "vitest": "^4.1.5"
   }
 }
