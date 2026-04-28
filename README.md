@@ -4,6 +4,18 @@ Manage App Store Connect metadata from the command line. Upload descriptions, ke
 
 Part of the [ShipApp](https://github.com/shipapp) toolkit for indie iOS developers.
 
+## Why?
+
+Updating App Store metadata through the web UI is painful — especially when you support multiple languages. Every release, you have to:
+
+1. Log into App Store Connect
+2. Click through each language tab one by one
+3. Copy-paste descriptions, keywords, What's New text
+4. Upload screenshots for every device size × every language
+5. Repeat for 10+ languages
+
+**@shipapp/metadata** turns this into a single command. Pull your current metadata to local JSON files, edit them in your favorite editor (or generate them with AI), and push everything back in seconds. Screenshots too.
+
 ## Features
 
 - **Pull** metadata from App Store Connect to local JSON files
