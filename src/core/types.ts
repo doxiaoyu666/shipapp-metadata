@@ -62,18 +62,37 @@ export const DISPLAY_TYPE_MAP: Record<string, string> = {
 };
 
 // JSON locale → ASC API locale
+// Only map locales where the filename differs from the API locale.
+// Unmapped locales are used as-is (e.g., 'ja' → 'ja', 'en-US' → 'en-US').
 export const LOCALE_MAP: Record<string, string> = {
-  'en-US': 'en-US',
-  'zh-Hans': 'zh-Hans',
-  'zh-Hant': 'zh-Hant',
-  'ja': 'ja',
-  'ko': 'ko',
   'fr': 'fr-FR',
   'de': 'de-DE',
   'es': 'es-ES',
-  'it': 'it',
   'pt-BR': 'pt-BR',
+  'pt': 'pt-BR',
   'ru': 'ru',
+  'ar': 'ar-SA',
+  'ca': 'ca',
+  'cs': 'cs',
+  'da': 'da',
+  'el': 'el',
+  'fi': 'fi',
+  'he': 'he',
+  'hi': 'hi',
+  'hr': 'hr',
+  'hu': 'hu',
+  'id': 'id',
+  'ms': 'ms',
+  'nl': 'nl-NL',
+  'no': 'no',
+  'pl': 'pl',
+  'ro': 'ro',
+  'sk': 'sk',
+  'sv': 'sv',
+  'th': 'th',
+  'tr': 'tr',
+  'uk': 'uk',
+  'vi': 'vi',
 };
 
 export const EN_VARIANTS = ['en-GB', 'en-AU', 'en-CA'];

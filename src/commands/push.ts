@@ -82,12 +82,7 @@ export async function pushCommand(
       const filePath = path.join(metadataDir, file);
       const metadata: MetadataFile = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
       const jsonLocale = metadata.language_code || path.basename(file, '.json');
-      const apiLocale = LOCALE_MAP[jsonLocale];
-
-      if (!apiLocale) {
-        console.log(`  ⚠️  Skipping ${file}: unknown locale "${jsonLocale}"`);
-        continue;
-      }
+      const apiLocale = LOCALE_MAP[jsonLocale] || jsonLocale;
 
       const attributes: Record<string, string> = {};
       if (metadata.description && (!onlyFields || onlyFields.has('description')))
