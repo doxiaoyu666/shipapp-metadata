@@ -1,0 +1,36 @@
+{
+  "name": "@shipapp/metadata",
+  "version": "0.1.0",
+  "description": "Manage App Store Connect metadata from the command line — upload descriptions, keywords, screenshots, and more.",
+  "main": "dist/cli.js",
+  "bin": {
+    "shipapp-metadata": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "esbuild src/cli.ts --bundle --platform=node --target=node18 --outfile=dist/cli.js --format=cjs --banner:js='#!/usr/bin/env node'",
+    "dev": "tsx src/cli.ts",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": ["app-store-connect", "aso", "metadata", "ios", "screenshots", "cli"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0",
+    "yargs": "^17.7.2",
+    "ora": "^5.4.1",
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.5"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/yargs": "^17.0.0",
+    "@types/inquirer": "^8.2.0",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.20.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.4.0"
+  }
+}
