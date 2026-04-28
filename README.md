@@ -88,6 +88,60 @@ shipapp-metadata init
 
 It will ask for your Key ID, Issuer ID, and the path to your `.p8` file. Credentials are stored in `~/.shipapp/credentials.json` (file permission `600`).
 
+## Prerequisites
+
+- Your app must already exist in App Store Connect (at least one version created)
+- This tool **cannot** create new apps — you must do that manually in the ASC web UI first
+- The tool manages metadata for existing apps: descriptions, keywords, screenshots, etc.
+
+## Typical Workflows
+
+### First time: Pull existing metadata
+
+If your app is already on the App Store, start by pulling your current metadata:
+
+```bash
+shipapp-metadata pull --app "MyApp" --output ./metadata
+```
+
+This creates one JSON file per language (e.g., `en-US.json`, `zh-Hans.json`) with your current descriptions, keywords, etc. Now you have a local copy to work with.
+
+### Every release: Update What's New
+
+The most common use case — update the "What's New" text for a new version:
+
+**With Claude Code (recommended):**
+```
+/aso-metadata MyApp
+```
+Tell it what changed → AI generates What's New in all languages → review → auto-upload.
+
+**With CLI:**
+1. Edit the `whats_new` field in each JSON file
+2. `shipapp-metadata push --app "MyApp" --dir ./metadata --only whats_new`
+
+### Full metadata refresh
+
+When you want to rewrite descriptions, keywords, or promotional text:
+
+**With Claude Code:**
+```
+/aso-metadata MyApp
+```
+Describe your app or point to a changelog → AI generates optimized metadata for all languages → review → upload.
+
+**With CLI:**
+1. Edit the JSON files (or use any AI tool to generate them)
+2. `shipapp-metadata push --app "MyApp" --dir ./metadata`
+
+### Update screenshots
+
+Prepare screenshots in the required directory structure, then:
+
+```bash
+shipapp-metadata screenshots --app "MyApp" --dir ./screenshots
+```
+
 ## Commands
 
 ### `init`
@@ -335,6 +389,60 @@ shipapp-metadata init
 ```
 
 按提示输入 Key ID、Issuer ID 和 `.p8` 文件路径。凭证保存在 `~/.shipapp/credentials.json`（权限 `600`）。
+
+## 前提条件
+
+- App 必须已经在 App Store Connect 中创建（至少有一个版本）
+- 本工具**不能**创建新 App，需要先在 ASC 后台手动创建
+- 工具用于管理已有 App 的元数据：描述、关键词、截图等
+
+## 典型工作流
+
+### 首次使用：拉取现有文案
+
+如果你的 App 已经上架，先把当前文案拉到本地：
+
+```bash
+shipapp-metadata pull --app "我的App" --output ./metadata
+```
+
+每种语言生成一个 JSON 文件（`en-US.json`、`zh-Hans.json` 等），包含当前的描述、关键词等。
+
+### 每次发版：更新「新功能」
+
+最常见的场景——发新版本时更新 What's New：
+
+**用 Claude Code（推荐）：**
+```
+/aso-metadata 我的App
+```
+告诉它改了什么 → AI 生成所有语言的更新日志 → 确认 → 自动上传。
+
+**用 CLI：**
+1. 编辑每个 JSON 文件的 `whats_new` 字段
+2. `shipapp-metadata push --app "我的App" --dir ./metadata --only whats_new`
+
+### 全量更新文案
+
+当你想重写描述、关键词或推广文本：
+
+**用 Claude Code：**
+```
+/aso-metadata 我的App
+```
+描述你的 App 或指向 changelog → AI 生成所有语言的优化文案 → 确认 → 上传。
+
+**用 CLI：**
+1. 编辑 JSON 文件（或用 AI 工具生成）
+2. `shipapp-metadata push --app "我的App" --dir ./metadata`
+
+### 更新截图
+
+准备好截图目录结构后：
+
+```bash
+shipapp-metadata screenshots --app "我的App" --dir ./screenshots
+```
 
 ## 命令
 
