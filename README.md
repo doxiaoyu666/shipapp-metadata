@@ -29,8 +29,28 @@ Updating App Store metadata through the web UI is painful — especially when yo
 - **Upload screenshots** for all devices and languages in one command
 - **Auto-sync** English variants (en-GB, en-AU, en-CA) from en-US
 - **MCP Server** for AI agent integration (Claude, etc.)
+- **Claude Code Skill** — generate multilingual metadata with AI and upload in one command
 
 ## Quick Start
+
+### Option A: Claude Code (Recommended)
+
+If you use [Claude Code](https://claude.ai/code), just clone this repo and use the built-in skill:
+
+```bash
+git clone https://github.com/shipapp/metadata.git
+cd metadata
+
+# One-time setup
+shipapp-metadata init
+
+# Then use the skill in Claude Code:
+/aso-metadata MyApp
+```
+
+The skill will generate optimized metadata in 8 languages, let you review, then upload to App Store Connect automatically.
+
+### Option B: CLI
 
 ```bash
 npm install -g @shipapp/metadata
@@ -257,8 +277,28 @@ MIT
 - **上传截图** 一条命令搞定所有设备和语言
 - **自动同步** 英文变体（en-GB、en-AU、en-CA）从 en-US 同步
 - **MCP Server** 支持 AI 代理集成（Claude 等）
+- **Claude Code Skill** — AI 生成多语言文案并一键上传
 
 ## 快速开始
+
+### 方式一：Claude Code（推荐）
+
+如果你使用 [Claude Code](https://claude.ai/code)，clone 本仓库后直接用内置 Skill：
+
+```bash
+git clone https://github.com/shipapp/metadata.git
+cd metadata
+
+# 首次配置
+shipapp-metadata init
+
+# 在 Claude Code 中使用：
+/aso-metadata 我的App
+```
+
+Skill 会自动生成 8 种语言的优化文案，确认后一键上传到 App Store Connect。
+
+### 方式二：CLI
 
 ```bash
 npm install -g @shipapp/metadata
