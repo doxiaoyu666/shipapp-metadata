@@ -41,6 +41,13 @@ export async function pushCommand(
 
     spinner.text = `Version: ${version.attributes.versionString} (${version.attributes.appStoreState})`;
 
+    if (!EDITABLE_STATES.includes(version.attributes.appStoreState)) {
+      spinner.warn(
+        `Version ${version.attributes.versionString} is in "${version.attributes.appStoreState}" state and may not be editable. ` +
+        `Create a new version in App Store Connect first, or some fields (like whatsNew) will fail.`
+      );
+    }
+
     // 3. Get existing localizations
     const localizations = await fetchAll(
       `/appStoreVersions/${version.id}/appStoreVersionLocalizations`
@@ -108,11 +115,12 @@ export async function pushCommand(
       if (apiLocale === 'en-US') {
         enUSAttributes = attributes;
         if (metadata.app_name || metadata.subtitle) {
-          enUSInfoAttrs = {};
+          const infoAttrs: Record<string, string> = {};
           if (metadata.app_name && (!onlyFields || onlyFields.has('app_name')))
-            enUSInfoAttrs.name = metadata.app_name;
+            infoAttrs.name = metadata.app_name;
           if (metadata.subtitle && (!onlyFields || onlyFields.has('subtitle')))
-            enUSInfoAttrs.subtitle = metadata.subtitle;
+            infoAttrs.subtitle = metadata.subtitle;
+          if (Object.keys(infoAttrs).length > 0) enUSInfoAttrs = infoAttrs;
         }
       }
 
