@@ -198,10 +198,6 @@ Credentials are stored in `~/.shipapp/`:
 
 ## FAQ
 
-**Q: How is this different from fastlane?**
-
-fastlane is a comprehensive iOS automation suite. `@shipapp/metadata` is focused on one thing: managing App Store metadata. It's simpler, faster to set up, and works great as a standalone tool or alongside fastlane.
-
 **Q: Can I use this with CI/CD?**
 
 Yes. Set up credentials on your CI machine with `shipapp-metadata init` or by creating `~/.shipapp/credentials.json` directly.
