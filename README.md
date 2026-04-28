@@ -1,5 +1,11 @@
 # @shipapp/metadata
 
+[English](#english) | [中文](#中文)
+
+---
+
+<a id="english"></a>
+
 Manage App Store Connect metadata from the command line. Upload descriptions, keywords, screenshots, and more — across all languages at once.
 
 Part of the [ShipApp](https://github.com/shipapp) toolkit for indie iOS developers.
@@ -172,6 +178,8 @@ en-US screenshots are automatically synced to en-GB, en-AU, and en-CA.
 
 ## Supported Languages
 
+Any locale supported by App Store Connect works out of the box. Common ones:
+
 | Code | Language |
 |------|----------|
 | `en-US` | English (US) — auto-synced to en-GB, en-AU, en-CA |
@@ -179,12 +187,22 @@ en-US screenshots are automatically synced to en-GB, en-AU, and en-CA.
 | `zh-Hant` | Traditional Chinese |
 | `ja` | Japanese |
 | `ko` | Korean |
-| `fr` | French |
-| `de` | German |
-| `es` | Spanish |
+| `fr` / `fr-FR` | French |
+| `de` / `de-DE` | German |
+| `es` / `es-ES` | Spanish |
 | `it` | Italian |
 | `pt-BR` | Portuguese (Brazil) |
 | `ru` | Russian |
+| `ar-SA` | Arabic |
+| `th` | Thai |
+| `vi` | Vietnamese |
+| `tr` | Turkish |
+| `nl-NL` | Dutch |
+| `sv` | Swedish |
+| `da` | Danish |
+| `pl` | Polish |
+| `uk` | Ukrainian |
+| ... | [All ASC locales supported](https://developer.apple.com/help/app-store-connect/reference/app-store-localizations/) |
 
 ## Configuration
 
@@ -207,5 +225,165 @@ Yes. Set up credentials on your CI machine with `shipapp-metadata init` or by cr
 You'll need to generate a new one in App Store Connect. Apple doesn't allow re-downloading .p8 files.
 
 ## License
+
+MIT
+
+---
+
+<a id="中文"></a>
+
+# @shipapp/metadata
+
+通过命令行管理 App Store Connect 元数据。一条命令批量上传所有语言的描述、关键词、截图。
+
+[ShipApp](https://github.com/shipapp) 独立开发者工具箱的一部分。
+
+## 为什么需要这个工具？
+
+每次发版都要在 App Store Connect 后台手动更新元数据，非常痛苦——尤其是多语言的时候：
+
+1. 登录 App Store Connect
+2. 逐个点击每种语言的标签页
+3. 复制粘贴描述、关键词、更新日志
+4. 为每种设备尺寸 × 每种语言上传截图
+5. 10+ 种语言重复以上操作
+
+**@shipapp/metadata** 把这一切变成一条命令。把元数据拉到本地 JSON 文件，用你喜欢的编辑器修改（或用 AI 生成），然后一键推送回去。截图也一样。
+
+## 功能
+
+- **拉取** App Store Connect 元数据到本地 JSON 文件
+- **推送** 所有语言的描述、关键词、推广文本、更新日志
+- **上传截图** 一条命令搞定所有设备和语言
+- **自动同步** 英文变体（en-GB、en-AU、en-CA）从 en-US 同步
+- **MCP Server** 支持 AI 代理集成（Claude 等）
+
+## 快速开始
+
+```bash
+npm install -g @shipapp/metadata
+
+# 配置 API 凭证（只需一次）
+shipapp-metadata init
+
+# 查看账号下的所有 App
+shipapp-metadata list
+
+# 拉取元数据到本地
+shipapp-metadata pull --app "我的App" --output ./metadata
+
+# 编辑 JSON 文件后推送
+shipapp-metadata push --app "我的App" --dir ./metadata
+
+# 上传截图
+shipapp-metadata screenshots --app "我的App" --dir ./screenshots
+```
+
+## 配置
+
+需要一个 **App Store Connect API Key**：
+
+1. 进入 [App Store Connect](https://appstoreconnect.apple.com/) → 用户和访问 → 集成 → 密钥
+2. 点击 **生成 API 密钥**（需要管理员权限）
+3. 下载 `.p8` 私钥文件（只能下载一次！）
+4. 记下 **Key ID** 和 **Issuer ID**
+
+然后运行：
+
+```bash
+shipapp-metadata init
+```
+
+按提示输入 Key ID、Issuer ID 和 `.p8` 文件路径。凭证保存在 `~/.shipapp/credentials.json`（权限 `600`）。
+
+## 命令
+
+### `init` — 初始化配置
+
+```bash
+shipapp-metadata init
+```
+
+### `list` — 列出所有 App
+
+```bash
+shipapp-metadata list
+```
+
+### `pull` — 拉取元数据
+
+```bash
+shipapp-metadata pull --app <关键词> [--output <目录>]
+```
+
+- `--app` — App 名称关键词（模糊匹配，不区分大小写）
+- `--output` — 输出目录（默认 `./metadata`）
+
+每种语言生成一个 JSON 文件（如 `en-US.json`、`zh-Hans.json`）。
+
+### `push` — 推送元数据
+
+```bash
+shipapp-metadata push --app <关键词> --dir <目录> [--only <字段>]
+```
+
+- `--app` — App 名称关键词
+- `--dir` — 包含 JSON 文件的元数据目录
+- `--only` — 只更新指定字段（逗号分隔）：`description`、`keywords`、`promotional_text`、`whats_new`、`app_name`、`subtitle`
+
+```bash
+# 更新所有字段
+shipapp-metadata push --app "我的App" --dir ./metadata
+
+# 只更新更新日志
+shipapp-metadata push --app "我的App" --dir ./metadata --only whats_new
+```
+
+### `screenshots` — 上传截图
+
+```bash
+shipapp-metadata screenshots --app <关键词> --dir <目录>
+```
+
+截图目录结构：
+
+```
+screenshots/
+├── en-US/
+│   ├── 6.7-inch/          # iPhone 15/16 Pro Max
+│   │   ├── 01.png
+│   │   └── 02.png
+│   └── ipad-13/           # iPad Pro 13"
+│       └── 01.png
+└── zh-Hans/
+    └── 6.7-inch/
+        └── 01.png
+```
+
+支持的设备文件夹：
+
+| 文件夹 | 设备 |
+|--------|------|
+| `6.9-inch` | iPhone 16 Pro Max |
+| `6.7-inch` | iPhone 15 Pro Max |
+| `6.5-inch` | iPhone 11 Pro Max / XS Max |
+| `5.5-inch` | iPhone 8 Plus |
+| `ipad-13` | iPad Pro 13" |
+| `ipad-12.9` | iPad Pro 12.9" |
+| `ipad-11` | iPad Pro 11" |
+
+图片按文件名排序决定展示顺序。en-US 截图自动同步到 en-GB、en-AU、en-CA。
+
+## 常见问题
+
+**Q: 可以在 CI/CD 中使用吗？**
+
+可以。在 CI 机器上运行 `shipapp-metadata init` 或直接创建 `~/.shipapp/credentials.json`。
+
+**Q: .p8 密钥文件丢了怎么办？**
+
+需要在 App Store Connect 重新生成。Apple 不支持重新下载 `.p8` 文件。
+
+## 开源协议
 
 MIT
