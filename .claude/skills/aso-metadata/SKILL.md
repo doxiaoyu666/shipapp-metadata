@@ -1,7 +1,7 @@
 ---
 name: aso-metadata
 description: Generate and upload App Store metadata (description, keywords, subtitle, whats_new) in multiple languages. Full workflow from content generation to App Store Connect upload.
-argument-hint: <app name> [version]
+argument-hint: <app name> [--only whats_new] [version]
 ---
 
 # ASO Metadata — Generate & Upload
@@ -13,10 +13,25 @@ Generate multilingual App Store metadata and upload to App Store Connect in one 
 - `shipapp-metadata` CLI installed (`npm install -g @shipapp/metadata`)
 - App Store Connect API credentials configured (`shipapp-metadata init`)
 
+## Arguments
+
+- `<app name>` — required. App name keyword for matching (e.g., `fotime`, `tapal`)
+- `--only <fields>` — optional. Only generate and upload specific fields. Common values:
+  - `whats_new` — only update What's New (most common for releases)
+  - `keywords,description` — update keywords and description
+  - `description,keywords,promotional_text,whats_new,app_name,subtitle` — all fields (default if omitted)
+- `[version]` — optional. Version number to read from CHANGELOG
+
+**Examples:**
+- `/aso-metadata MyApp` — generate all fields for all languages
+- `/aso-metadata MyApp --only whats_new` — only generate and upload What's New
+- `/aso-metadata MyApp --only keywords,description` — only keywords and description
+
 ## Workflow
 
-### Step 1 — Determine what to generate
+### Step 1 — Determine scope and content
 
+- Parse `--only` flag to determine which fields to generate. If not specified, generate all fields.
 - If user specifies a version or changelog, read the update content
 - If a CHANGELOG.md exists in the current project, read the latest version
 - Otherwise, ask user to describe the update
@@ -43,6 +58,10 @@ Generate these JSON files (one per language):
 - `de-DE.json` — German
 - `es-ES.json` — Spanish
 
+**If `--only` is specified**, only update the specified fields in each JSON file. Keep other fields unchanged from the existing files.
+
+**If `--only whats_new`**, only generate and write the `whats_new` field. This is the fastest workflow for routine releases.
+
 Each file format:
 ```json
 {
@@ -63,17 +82,14 @@ Write JSON files to the metadata directory. Show a summary of what was generated
 
 ### Step 5 — Upload to App Store Connect
 
-After user confirms, run:
+After user confirms, run the push command with matching `--only` flag:
 
 ```bash
-# Upload all fields
+# If --only was specified:
+shipapp-metadata push --app <keyword> --dir <metadata_dir> --only <fields>
+
+# If no --only (full update):
 shipapp-metadata push --app <keyword> --dir <metadata_dir>
-
-# Upload only whats_new (most common for releases)
-shipapp-metadata push --app <keyword> --dir <metadata_dir> --only whats_new
-
-# Upload specific fields
-shipapp-metadata push --app <keyword> --dir <metadata_dir> --only keywords,description
 ```
 
 ### Step 6 — Upload screenshots (optional)
